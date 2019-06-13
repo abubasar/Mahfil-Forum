@@ -22,14 +22,14 @@
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
                     <li>@Html.ActionLink("Home", "Index", "Home")</li>
-                    <li>@Html.ActionLink("About", "About", "Home")</li>
-                    <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
+                    <li>@Html.ActionLink("Add New Mahfil", "Create", "Mahfil")</li>
+                   
                 </ul>
                 @Html.Partial("_LoginPartial")
             </div>
         </div>
     </div>
-    <div class="container body-content">
+    <div class="container body-content" style="padding:100px;">
         @RenderBody()
         <hr />
         <footer>
@@ -39,6 +39,59 @@
 
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/bootstrap")
+    @Scripts.Render("~/bundles/app")
     @RenderSection("scripts", required: false)
+
+    <script type="text/x-template" id="notifications-template">
+        <ul class="notifications">
+            <%
+            _.each(notifications,function(notification){
+            if(notification.Type==1){ %>
+            <li><%= notification.Congregration.Speaker.Name%> has canceled the Mahfil at <%= notification.Congregration.Venue%> at <%= moment(notification.Congregration.DateTime).format("D MMM HH:mm") %> </li>
+
+            <%
+            }
+            })
+
+            %>
+        </ul>
+   
+    </script>
+
+    <script>
+        $(document).ready(function () {
+            $.getJSON("/api/notifications", function (notifications) {
+                console.log(notifications);
+                if (notifications.length == 0)
+                    return;
+
+                $(".js-notifications-count").text(notifications.length)
+                    .removeClass("hide")
+                    .addClass("animated bounceInDown");
+
+
+                $(".notifications").popover({
+                    html: true,
+                    title: "Notifications",
+                    content: function () {
+                        var compiled = _.template($("#notifications-template").html());
+                        var html = compiled({ notifications: notifications });
+                        return html;
+                    },
+                    placement: "bottom",
+                   // template: '<div class="popover popover-notifications" role="tooltip"><div class="arrow"></div><h3 class="popover-title"></h3><div class="popover-content"></div></div>'
+
+                }).on("shown.bs.popover", function () {
+                    $.post("/api/notifications/markAsRead")
+                        .done(function () {
+                            $(".js-notifications-count").text("").addClass("hide");
+                        });
+                
+                    });
+            });
+
+            
+        });
+    </script>
 </body>
 </html>

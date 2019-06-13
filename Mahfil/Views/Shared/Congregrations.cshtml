@@ -1,0 +1,63 @@
+﻿@model Mahfil.ViewModels.CongregrationsViewModel
+<h2>@Model.Heading</h2>
+@using (Html.BeginForm("Search", "Mahfil"))
+{
+    <div class="form-group">
+        <div class="input-group" style="width:300px;">
+            @Html.TextBoxFor(x => x.SearchTerm, new { @class = "form-control" })
+            <span class="input-group-addon">
+                     <i class="glyphicon glyphicon-search"></i>
+            </span>
+        </div>
+      
+    </div>
+
+}
+
+
+<ul style="margin-top:30px;" class="congregrations" id="congregrations">
+    @foreach(var congregration in Model.UpcomingCongregrations)
+    {
+        <li>
+            <div class="date">
+                <div class="month">
+                    @congregration.DateTime.ToString("MMM")
+                </div>
+                <div class="day">
+                    @congregration.DateTime.ToString("d ")
+                </div>
+            </div>
+            <div class="details">
+                <span class="speaker">
+                    <a href="@Url.Action("Details","Mahfil",new { id=congregration.Id})">
+                        @congregration.Speaker.Name
+                    </a>
+                   
+                    @if (congregration.IsCancelled)
+                    {
+                        <span class="label label-warning" >Cancel</span>
+                    }
+                  
+
+                </span>
+                <span class="genre">
+                    @congregration.Genre.Name
+                </span>
+                @if (Model.ShowActions && !congregration.IsCancelled)
+                {
+                    <button data-congregration-id="@congregration.Id" class="btn @(Model.Attendances.Contains(congregration.Id)?"btn-info":"btn-default") btn-sm pull-right js-toggle-attendance">Going ?</button>
+                }
+
+            </div>
+
+        </li>
+    }
+</ul>
+
+@section scripts{
+<script>
+    $(document).ready(function () {
+        MahfilController.init("#congregrations");
+    });
+</script>
+    }

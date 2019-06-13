@@ -1,0 +1,9 @@
+﻿@model ICollection<Mahfil.Models.Following>
+@foreach (var following in Model)
+{
+    <div class="thumbnail">
+        <p>@following.Follower.Name</p>
+    </div>
+
+}
+<

@@ -1,0 +1,41 @@
+﻿@model Mahfil.ViewModels.MahfilDetailsViewModel
+    @{ 
+        ViewBag.Title = "Details";
+    }
+<h2>
+@Model.Congregration.Speaker.Name
+    @if (User.Identity.IsAuthenticated)
+    {
+
+        if (Model.IsFollowing)
+        {
+    <button data-user-id="@Model.Congregration.SpeakerId" class="btn btn-info js-toggle-follow">Following</button>
+
+        }
+        else
+        {
+    <button data-user-id="@Model.Congregration.SpeakerId" class="btn btn-default js-toggle-follow">Follow</button>
+        }
+    }
+
+    <p>
+        Held At @Model.Congregration.Venue on @Model.Congregration.DateTime.ToString("d MMM") at @Model.Congregration.DateTime.ToString("HH:mm")
+    </p>
+
+    @if (User.Identity.IsAuthenticated && Model.IsAttending)
+    {
+        <p>You Are going to this Mahfil</p>
+    }
+
+</h2>
+
+@section scripts
+    {
+    <script>
+        $(document).ready(function () {
+            MahfilDetailsController.init();
+
+        });
+    </script>
+    
+    }

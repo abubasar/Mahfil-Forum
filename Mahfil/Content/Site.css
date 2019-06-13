@@ -1,5 +1,5 @@
 ﻿body {
-    padding-top: 50px;
+    padding-top: 90 px;
     padding-bottom: 20px;
 }
 
@@ -22,3 +22,90 @@ select,
 textarea {
     max-width: 280px;
 }
+span.field-validation-error{
+    font-weight:bold;
+    color:red;
+}
+
+
+/*Page level styles*/
+.congregrations {
+    list-style: none;
+}
+.congregrations > li {
+    position: relative;
+    margin-bottom: 30px;
+}
+.congregrations > li .date {
+       background:red;
+        color: white;
+        text-align: center;
+        width:60px;
+        border-radius:8px;
+    }
+
+.congregrations > li .date .month {
+       text-transform:uppercase;
+       font-size:14px;
+       font-weight:bold;
+       padding: 2px 6px;
+    }
+
+.congregrations > li .date .day {
+       background:#f7f7f7;
+       color:#333; 
+       font-size:20px;
+       padding:6px 12px;
+    }
+
+.congregrations > li .details{
+    position:absolute;
+    top:0;
+    left:70px;
+}
+
+    .congregrations > li .details .speaker {
+        font-weight: bold;
+        display: block;
+    }
+
+    .congregrations > li .details .genre {
+        font-size:16px;
+    }
+
+    .congregrations > li .actions {
+        font-size: 16px;
+        display:none;
+    }
+
+    .congregrations > li:hover .actions {
+        
+        display: block;
+    }
+
+ul .notifications {
+    list-style: none;
+    padding-left: 0;
+}
+
+    ul .notifications > li {
+        border-bottom: 1px solid #808080;
+        padding: 10px 0;
+    }
+
+     ul .notifications > li:last-child {
+            border-bottom: none;
+        }
+
+ 
+
+    .navbar-inverse .notifications{
+        position:relative;
+    }
+
+    .navbar-inverse .notifications .badge{
+    position: absolute;
+    top:0;
+    
+     }
+

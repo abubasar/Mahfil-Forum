@@ -5,12 +5,28 @@
     {
     @Html.AntiForgeryToken()
 
-    <ul class="nav navbar-nav navbar-right">
-        <li>
-            @Html.ActionLink("Hello " + User.Identity.GetUserName() + "!", "Index", "Manage", routeValues: null, htmlAttributes: new { title = "Manage" })
-        </li>
-        <li><a href="javascript:document.getElementById('logoutForm').submit()">Log off</a></li>
-    </ul>
+<ul class="nav navbar-nav navbar-right">
+   <li class="notifications">
+    <a href="#">
+       <i  class="glyphicon glyphicon-globe"></i>
+       <span class="badge js-notifications-count hide"></span>
+       </a></li>
+
+    <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            @User.Identity.GetUserName()
+        </a>
+        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+            <a class="dropdown-item" href="@Url.Action("Mine","Mahfil")">My Upcoming Congregrations</a>
+            <a class="dropdown-item" href="@Url.Action("Attending","Mahfil")">Congregration I'am Going</a>
+            <a class="dropdown-item" href="@Url.Action("Following","Mahfil")">Speakers I' am Follow</a>
+            <div class="dropdown-divider"></div>
+            <a href="javascript:document.getElementById('logoutForm').submit()">Log off</a>
+        </div>
+    </li>
+
+
+</ul>
     }
 }
 else
